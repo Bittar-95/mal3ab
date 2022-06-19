@@ -35,9 +35,9 @@ namespace AspnetRun.Web
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
             // aspnetrun dependencies
-            ConfigureAspnetRunServices(services);            
+            ConfigureAspnetRunServices(services);
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -47,7 +47,7 @@ namespace AspnetRun.Web
             });
 
             services.AddRazorPages();
-        }        
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -106,12 +106,15 @@ namespace AspnetRun.Web
         public void ConfigureDatabases(IServiceCollection services)
         {
             // use in-memory database
-            services.AddDbContext<AspnetRunContext>(c =>
-                c.UseInMemoryDatabase("AspnetRunConnection"));
-
-            //// use real database
             //services.AddDbContext<AspnetRunContext>(c =>
-            //    c.UseSqlServer(Configuration.GetConnectionString("AspnetRunConnection")));
+            //    c.UseInMemoryDatabase("appContext"));
+            //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AspnetRunContext>();
+            //services.AddDbContext<AspnetRunContext>(c=>c.UseMySql)
+            //// use real database
+            ///
+            var conStr = Configuration.GetConnectionString("ConStr");
+            services.AddDbContext<appContext>(c =>
+                c.UseMySql(conStr, ServerVersion.AutoDetect(conStr), null));
         }
     }
 }

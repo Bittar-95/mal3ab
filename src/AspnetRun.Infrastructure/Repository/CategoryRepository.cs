@@ -10,7 +10,7 @@ namespace AspnetRun.Infrastructure.Repository
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        public CategoryRepository(AspnetRunContext dbContext) : base(dbContext)
+        public CategoryRepository(appContext dbContext) : base(dbContext)
         {            
         }
 

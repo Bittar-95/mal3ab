@@ -10,7 +10,7 @@ namespace AspnetRun.Infrastructure.Data
 {
     public class AspnetRunContextSeed
     {
-        public static async Task SeedAsync(AspnetRunContext aspnetrunContext, ILoggerFactory loggerFactory, int? retry = 0)
+        public static async Task SeedAsync(appContext aspnetrunContext, ILoggerFactory loggerFactory, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
 
@@ -20,17 +20,17 @@ namespace AspnetRun.Infrastructure.Data
                 // aspnetrunContext.Database.Migrate();
                 // aspnetrunContext.Database.EnsureCreated();
 
-                if (!aspnetrunContext.Categories.Any())
-                {
-                    aspnetrunContext.Categories.AddRange(GetPreconfiguredCategories());
-                    await aspnetrunContext.SaveChangesAsync();
-                }
+                //if (!aspnetrunContext.Categories.Any())
+                //{
+                //    aspnetrunContext.Categories.AddRange(GetPreconfiguredCategories());
+                //    await aspnetrunContext.SaveChangesAsync();
+                //}
 
-                if (!aspnetrunContext.Products.Any())
-                {
-                    aspnetrunContext.Products.AddRange(GetPreconfiguredProducts());
-                    await aspnetrunContext.SaveChangesAsync();
-                }
+                //if (!aspnetrunContext.Products.Any())
+                //{
+                //    aspnetrunContext.Products.AddRange(GetPreconfiguredProducts());
+                //    await aspnetrunContext.SaveChangesAsync();
+                //}
             }
             catch (Exception exception)
             {

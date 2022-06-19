@@ -14,7 +14,7 @@ namespace AspnetRun.Infrastructure.Repository
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
-        public ProductRepository(AspnetRunContext dbContext) : base(dbContext)
+        public ProductRepository(appContext dbContext) : base(dbContext)
         {
         }
 
@@ -43,9 +43,10 @@ namespace AspnetRun.Infrastructure.Repository
 
         public async Task<IEnumerable<Product>> GetProductByCategoryAsync(int categoryId)
         {
-            return await _dbContext.Products
-                .Where(x => x.CategoryId==categoryId)
-                .ToListAsync();
+            throw new NotImplementedException();
+            //return await _dbContext.Products
+            //    .Where(x => x.CategoryId==categoryId)
+            //    .ToListAsync();
         }
     }
 }
