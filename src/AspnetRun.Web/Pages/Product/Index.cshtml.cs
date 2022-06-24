@@ -10,11 +10,11 @@ namespace AspnetRun.Web.Pages.Product
 {
     public class IndexModel : PageModel
     {
-        private readonly IProductPageService _productPageService;
+        //private readonly IProductPageService _productPageService;
 
         public IndexModel(IProductPageService productPageService)
         {
-            _productPageService = productPageService ?? throw new ArgumentNullException(nameof(productPageService));
+            //_productPageService = productPageService ?? throw new ArgumentNullException(nameof(productPageService));
         }
 
         public IEnumerable<ProductViewModel> ProductList { get; set; } = new List<ProductViewModel>();
@@ -24,7 +24,7 @@ namespace AspnetRun.Web.Pages.Product
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ProductList = await _productPageService.GetProducts(SearchTerm);
+            //ProductList = await _productPageService.GetProducts(SearchTerm);
             return Page();
         }
     }

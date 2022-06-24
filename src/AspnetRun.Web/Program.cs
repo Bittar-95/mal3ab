@@ -37,7 +37,7 @@ namespace AspnetRun.Web
                 try
                 {
                     var aspnetRunContext = services.GetRequiredService<appContext>();
-                    AspnetRunContextSeed.SeedAsync(aspnetRunContext, loggerFactory).Wait();
+                    //AspnetRunContextSeed.SeedAsync(aspnetRunContext, loggerFactory).Wait();
                 }
                 catch (Exception exception)
                 {

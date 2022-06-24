@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AspnetRun.Infrastructure.Data
 {
-    public class appContext : IdentityDbContext
+    public class appContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         private readonly DbContextOptions _options;
 
@@ -23,8 +23,9 @@ namespace AspnetRun.Infrastructure.Data
 
 
         public DbSet<User> Users { get; set; }
-        public DbSet<CourtType> courtTypes { get; set; }
-
+        public DbSet<CourtType> CourtTypes { get; set; }
+        public DbSet<Court> Courts { get; set; }
+        public DbSet<Product> Products { get; set; }
         //public DbSet<Product> Products { get; set; }
         //public DbSet<Category> Categories { get; set; }
 
