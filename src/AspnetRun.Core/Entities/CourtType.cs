@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace AspnetRun.Core.Entities
 {
-    public class CourtType:Entity
+    public class CourtType : Entity
     {
         public string Size { get; set; }
         public string Type_AR { get; set; }
         public string Type_EN { get; set; }
-        public Court Court { get; set; }
+        public List<Court> Court { get; set; }
     }
 }

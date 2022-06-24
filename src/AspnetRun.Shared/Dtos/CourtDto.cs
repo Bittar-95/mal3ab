@@ -17,8 +17,11 @@ namespace AspnetRun.Shared.Dtos
         public string area { get; set; }
         public string Address { get; set; }
         public double Price { get; set; }
+        public int UserId { get; set; }
         public string ContactINFO { get; set; }
+        public CourtTypeDto CourtType { get; set; }
         public int CourtTypeId { get; set; }
+
 
     }
 }

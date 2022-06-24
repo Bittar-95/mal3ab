@@ -12,5 +12,6 @@ namespace AspnetRun.Core.Repositories
     public interface ICourtsRepository : IRepository<Court>
     {
         public Task<CourtDto> Add(Court court);
+        List<CourtDto> GetAll(int userId);
     }
 }

@@ -15,5 +15,5 @@ namespace AspnetRun.Core.Entities
     }
 
 
-    public class Roles : IdentityRole<int> { }
+    //public class Roles : IdentityRole<int> { }
 }

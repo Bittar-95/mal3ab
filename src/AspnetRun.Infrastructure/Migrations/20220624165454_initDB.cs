@@ -391,8 +391,7 @@ namespace AspnetRun.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Courts_CourtTypeId",
                 table: "Courts",
-                column: "CourtTypeId",
-                unique: true);
+                column: "CourtTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Courts_UserId",

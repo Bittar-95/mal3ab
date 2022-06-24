@@ -11,5 +11,6 @@ namespace AspnetRun.Application.Interfaces
     {
 
         Task<CourtDto> Add(CourtDto courtDto);
+        List<CourtDto> GetAll(int userId);
     }
 }

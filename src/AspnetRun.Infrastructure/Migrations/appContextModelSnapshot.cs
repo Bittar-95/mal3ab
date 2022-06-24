@@ -77,8 +77,7 @@ namespace AspnetRun.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourtTypeId")
-                        .IsUnique();
+                    b.HasIndex("CourtTypeId");
 
                     b.HasIndex("UserId");
 
@@ -400,8 +399,8 @@ namespace AspnetRun.Infrastructure.Migrations
             modelBuilder.Entity("AspnetRun.Core.Entities.Court", b =>
                 {
                     b.HasOne("AspnetRun.Core.Entities.CourtType", "CourtType")
-                        .WithOne("Court")
-                        .HasForeignKey("AspnetRun.Core.Entities.Court", "CourtTypeId")
+                        .WithMany("Court")
+                        .HasForeignKey("CourtTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

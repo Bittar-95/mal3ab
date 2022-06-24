@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspnetRun.Infrastructure.Migrations
 {
     [DbContext(typeof(appContext))]
-    [Migration("20220624115456_initDB")]
+    [Migration("20220624165454_initDB")]
     partial class initDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,8 +79,7 @@ namespace AspnetRun.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourtTypeId")
-                        .IsUnique();
+                    b.HasIndex("CourtTypeId");
 
                     b.HasIndex("UserId");
 
@@ -402,8 +401,8 @@ namespace AspnetRun.Infrastructure.Migrations
             modelBuilder.Entity("AspnetRun.Core.Entities.Court", b =>
                 {
                     b.HasOne("AspnetRun.Core.Entities.CourtType", "CourtType")
-                        .WithOne("Court")
-                        .HasForeignKey("AspnetRun.Core.Entities.Court", "CourtTypeId")
+                        .WithMany("Court")
+                        .HasForeignKey("CourtTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
