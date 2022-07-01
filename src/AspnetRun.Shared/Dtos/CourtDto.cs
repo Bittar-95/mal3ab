@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AspnetRun.Shared.Dtos
@@ -18,9 +20,11 @@ namespace AspnetRun.Shared.Dtos
         public string Address { get; set; }
         public double Price { get; set; }
         public int UserId { get; set; }
+        public WorkinghourDto? WorkinghourDto { get; set; }
         public string ContactINFO { get; set; }
-        public CourtTypeDto CourtType { get; set; }
-        public int CourtTypeId { get; set; }
+        public CourtTypeDto? CourtType { get; set; }
+        [Required]
+        public int? CourtTypeId { get; set; }
 
 
     }

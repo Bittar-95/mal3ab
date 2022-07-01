@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace AspnetRun.Core.Repositories
 {
-    public interface ICourtsRepository : IRepository<Court>
+    public interface IWorkingHoursRepository : IRepository<WorkingHour>
     {
-        Task<CourtDto> Add(Court court);
-        List<CourtDto> GetAll(int userId);
-        List<CourtDto> GetCourtsWithWorkingHours(int userId);
+        Task<WorkinghourDto> AddAsync(WorkinghourDto workinghourDto);
     }
 }

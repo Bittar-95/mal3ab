@@ -26,6 +26,8 @@ namespace AspnetRun.Infrastructure.Data
         public DbSet<CourtType> CourtTypes { get; set; }
         public DbSet<Court> Courts { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<WorkingHour> WorkingHours { get; set; }
         //public DbSet<Product> Products { get; set; }
         //public DbSet<Category> Categories { get; set; }
 

@@ -3,6 +3,7 @@ using System;
 using AspnetRun.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspnetRun.Infrastructure.Migrations
 {
     [DbContext(typeof(appContext))]
-    partial class appContextModelSnapshot : ModelSnapshot
+    [Migration("20220701130317_update-DB")]
+    partial class updateDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,7 +165,7 @@ namespace AspnetRun.Infrastructure.Migrations
 
                     b.HasIndex("CourtId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservation");
                 });
 
             modelBuilder.Entity("AspnetRun.Core.Entities.User", b =>

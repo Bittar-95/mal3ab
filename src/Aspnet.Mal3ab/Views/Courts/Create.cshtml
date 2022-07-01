@@ -1,6 +1,12 @@
-﻿@model AspnetRun.Shared.Dtos.CourtDto
+﻿@using AspnetRun.Application.Interfaces;
+@model AspnetRun.Shared.Dtos.CourtDto
+@inject ICourtTypeService _courtTypeService
 
 @{
+    var courtTypes = _courtTypeService.GetAll().Result;
+    courtTypes.Add(new AspnetRun.Shared.Dtos.CourtTypeDto() { Type_AR = "--- يرجى اختيار الملعب ---", Type_EN = "--- Please Select The Court Type ---" });
+
+    var listItems = courtTypes.Select(x => new SelectListItem { Value = x.Id.ToString() == "0" ? "" : x.Id.ToString(), Text = string.Concat(x.Type_EN, " ", x.Size) }).OrderBy(x => x.Value);
     ViewData["Title"] = "Details";
 }
 
@@ -59,10 +65,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="CourtTypeId" class="control-label"></label>
-                <input asp-for="CourtTypeId" class="form-control" />
+                <select asp-for="CourtTypeId" asp-items="listItems" class="form-control"></select>
                 <span asp-validation-for="CourtTypeId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+                        <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

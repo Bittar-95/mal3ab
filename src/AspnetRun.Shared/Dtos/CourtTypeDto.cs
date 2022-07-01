@@ -8,6 +8,7 @@ namespace AspnetRun.Shared.Dtos
 {
     public class CourtTypeDto
     {
+
         public int Id { get; set; }
         public string Size { get; set; }
         public string Type_AR { get; set; }

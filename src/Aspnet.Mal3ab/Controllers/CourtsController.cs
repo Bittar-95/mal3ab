@@ -12,17 +12,19 @@ namespace Aspnet.Mal3ab.Controllers
     public class CourtsController : Controller
     {
         private readonly ICourtService _courtService;
+        private readonly IWorkingHoursService _workingHoursService;
 
-        public CourtsController(ICourtService courtService)
+        public CourtsController(ICourtService courtService, IWorkingHoursService workingHoursService)
         {
             _courtService = courtService;
+            _workingHoursService = workingHoursService;
         }
 
 
         // GET: CourtsController
         public async Task<ActionResult> Index()
         {
-            var courts =  _courtService.GetAll(User.GetUserId().Value);
+            var courts = _courtService.GetAllCourts(User.GetUserId().Value);
             return View(courts);
         }
 
@@ -45,16 +47,69 @@ namespace Aspnet.Mal3ab.Controllers
         {
             try
             {
-                var userId = User.GetUserId();
-                courtDto.UserId = userId.Value;
-                await _courtService.Add(courtDto);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+
+                    var userId = User.GetUserId();
+                    courtDto.UserId = userId.Value;
+                    await _courtService.Add(courtDto);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    return View(courtDto);
+                }
             }
             catch (Exception e)
             {
-                return View();
+                return View(courtDto);
             }
+
         }
+
+        // GET: CourtsController/Create
+        public async Task<ActionResult> AddWorkingHours(int Id)
+        {
+            //Id Represent The Court Id
+            var court = _courtService.GetAllCourts(User.GetUserId().Value)?.FirstOrDefault(c => c.Id == Id);
+
+            if (court is null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var workingHours = await _workingHoursService.GetAsync(Id);
+            ViewBag.CourtId = Id;
+
+            return View(workingHours);
+        }
+
+        // POST: CourtsController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddWorkingHours(WorkinghourDto workingHourDto)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = workingHourDto.Id is null ? await _workingHoursService.AddAsync(workingHourDto, User.GetUserId().Value) : await _workingHoursService.EditAsync(workingHourDto, User.GetUserId().Value);
+                    if (result is null)
+                    {
+                        return View();
+                    }
+                    return RedirectToAction(nameof(Details), result.CourtId);
+                }
+            }
+            catch (Exception e)
+            {
+                return View(workingHourDto);
+            }
+            return View(workingHourDto);
+        }
+
+
 
         // GET: CourtsController/Edit/5
         public ActionResult Edit(int id)

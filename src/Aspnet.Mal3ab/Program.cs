@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AspnetRun.Infrastructure.Data;
 using AspnetRun.Core.Entities;
@@ -6,7 +5,6 @@ using AspnetRun.Application.Interfaces;
 using AspnetRun.Application.Services;
 using AspnetRun.Core.Repositories;
 using AspnetRun.Infrastructure.Repository;
-using AspnetRun.Shared;
 using AspnetRun.Core.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +18,10 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 
 builder.Services.AddScoped<ICourtsRepository, CourtRepository>();
 builder.Services.AddScoped<ICourtService, CourtService>();
+builder.Services.AddScoped<ICourtTypeRepository, CourtTypeRepository>();
+builder.Services.AddScoped<ICourtTypeService, CourtTypeService>();
+builder.Services.AddScoped<IWorkingHoursRepository, WorkingHoursRepository>();
+builder.Services.AddScoped<IWorkingHoursService, WorkingHoursService>();
 builder.Services.AddScoped<MapperConfig>();
 
 // Add services to the container.

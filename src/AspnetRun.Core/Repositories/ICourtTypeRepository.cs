@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace AspnetRun.Core.Repositories
 {
-    public interface ICourtsRepository : IRepository<Court>
+    public interface ICourtTypeRepository : IRepository<CourtType>
     {
-        Task<CourtDto> Add(Court court);
-        List<CourtDto> GetAll(int userId);
-        List<CourtDto> GetCourtsWithWorkingHours(int userId);
+        Task<List<CourtTypeDto>> GetCourtsTyps();
     }
 }

@@ -1,0 +1,79 @@
+﻿@model AspnetRun.Shared.Dtos.WorkinghourDto
+
+@{
+    ViewData["Title"] = "AddWorkingHours";
+}
+
+<h1>AddWorkingHours</h1>
+
+<h4>WorkinghourDto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddWorkingHours">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FromDay" class="control-label"></label>
+                <select asp-for="FromDay" asp-items="Html.GetEnumSelectList<DayOfWeek>()" class="form-control">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="FromDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDay" class="control-label"></label>
+                <select asp-for="ToDay" asp-items="Html.GetEnumSelectList<DayOfWeek>()" class="form-control">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="ToDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FromTime" class="control-label"></label>
+                <input asp-for="FromTime" class="form-control" type="time" />
+
+                <span asp-validation-for="FromTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToTime" class="control-label"></label>
+                <input asp-for="ToTime" class="form-control" type="time" />
+
+                <span asp-validation-for="ToTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AllDays" class="control-label"></label>
+                <select asp-for="AllDays" class="form-control">
+                    <option selected="selected" value="false">False</option>
+                    <option value="true">True</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AllTimes" class="control-label"></label>
+                <select asp-for="AllTimes" class="form-control">
+                    <option selected="selected" value="false">False</option>
+                    <option value="true">True</option>
+                </select>
+            </div>
+
+            <div hidden class="form-group">
+                <input asp-for="CourtId" class="form-control" value="@ViewBag.CourtId" />
+            </div>
+            <div class="form-group" hidden>
+                <input asp-for="Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -1,4 +1,5 @@
 ﻿using AspnetRun.Core.Entities.Base;
+using AspnetRun.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace AspnetRun.Core.Entities
     public class WorkingHour : Entity
     {
         
-        public string FromDay { get; set; }
-        public string ToDay { get; set; }
+        public DayOfWeek FromDay { get; set; }
+        public DayOfWeek ToDay { get; set; }
         public DateTime FromTime { get; set; }
         public DateTime ToTime { get; set; }
         public int CourtId { get; set; }

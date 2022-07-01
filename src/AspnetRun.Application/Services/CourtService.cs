@@ -28,9 +28,20 @@ namespace AspnetRun.Application.Services
             return await courtsRepository.Add(court);
         }
 
-        public List<CourtDto> GetAll(int userId)
+        public List<CourtDto> GetAllCourts(int userId)
         {
             return courtsRepository.GetAll(userId);
         }
+        public async Task<CourtDto> GetCourt(int courtId, int userId)
+        {
+            var court = await courtsRepository.GetAsync(x => x.Id == courtId && x.UserId == userId);
+            return _mapperConfig.Mapper().Map<CourtDto>(court.FirstOrDefault());
+        }
+
+        public List<CourtDto> GetCourtsWithWorkingHours(int userId)
+        {
+            return courtsRepository.GetCourtsWithWorkingHours(userId);
+        }
+
     }
 }
