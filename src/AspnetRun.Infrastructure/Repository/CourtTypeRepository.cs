@@ -25,5 +25,10 @@ namespace AspnetRun.Infrastructure.Repository
             var results = await GetAllAsync();
             return _configuration.Mapper().Map<List<CourtTypeDto>>(results);
         }
+        public async Task<CourtTypeDto> GetCourtTypById(int Id)
+        {
+            var results = await GetByIdAsync(Id);
+            return _configuration.Mapper().Map<CourtTypeDto>(results);
+        }
     }
 }

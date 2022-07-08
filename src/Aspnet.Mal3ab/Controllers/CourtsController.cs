@@ -13,11 +13,13 @@ namespace Aspnet.Mal3ab.Controllers
     {
         private readonly ICourtService _courtService;
         private readonly IWorkingHoursService _workingHoursService;
+        private readonly ICourtTypeService _courtTypeService;
 
-        public CourtsController(ICourtService courtService, IWorkingHoursService workingHoursService)
+        public CourtsController(ICourtService courtService, IWorkingHoursService workingHoursService, ICourtTypeService courtTypeService)
         {
             _courtService = courtService;
             _workingHoursService = workingHoursService;
+            _courtTypeService = courtTypeService;
         }
 
 
@@ -29,9 +31,11 @@ namespace Aspnet.Mal3ab.Controllers
         }
 
         // GET: CourtsController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var coutDetails = await _courtService.GetCourt(id, User.GetUserId().Value);
+            coutDetails.CourtType = await _courtTypeService.GetCourtTypById(id);
+            return View(coutDetails);
         }
 
         // GET: CourtsController/Create
@@ -94,6 +98,16 @@ namespace Aspnet.Mal3ab.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (workingHourDto.AllDays)
+                    {
+                        workingHourDto.FromDay = null;
+                        workingHourDto.ToDay = null;
+                    }
+                    if (workingHourDto.AllTimes)
+                    {
+                        workingHourDto.FromTime = null;
+                        workingHourDto.ToTime = null;
+                    }
                     var result = workingHourDto.Id is null ? await _workingHoursService.AddAsync(workingHourDto, User.GetUserId().Value) : await _workingHoursService.EditAsync(workingHourDto, User.GetUserId().Value);
                     if (result is null)
                     {

@@ -10,11 +10,11 @@ namespace AspnetRun.Core.Entities
 {
     public class WorkingHour : Entity
     {
-        
-        public DayOfWeek FromDay { get; set; }
-        public DayOfWeek ToDay { get; set; }
-        public DateTime FromTime { get; set; }
-        public DateTime ToTime { get; set; }
+
+        public DayOfWeek? FromDay { get; set; }
+        public DayOfWeek? ToDay { get; set; }
+        public DateTime? FromTime { get; set; }
+        public DateTime? ToTime { get; set; }
         public int CourtId { get; set; }
         public Court Court { get; set; }
 

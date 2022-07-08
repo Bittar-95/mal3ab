@@ -10,5 +10,6 @@ namespace AspnetRun.Application.Interfaces
     public interface ICourtTypeService
     {
         Task<List<CourtTypeDto>> GetAll();
+        Task<CourtTypeDto> GetCourtTypById(int Id);
     }
 }

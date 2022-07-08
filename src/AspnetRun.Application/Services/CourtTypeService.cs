@@ -21,5 +21,9 @@ namespace AspnetRun.Application.Services
         {
             return await _courtTypeRepository.GetCourtsTyps();
         }
+        public async Task<CourtTypeDto> GetCourtTypById(int Id)
+        {
+            return await _courtTypeRepository.GetCourtTypById(Id);
+        }
     }
 }

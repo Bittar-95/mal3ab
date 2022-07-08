@@ -12,5 +12,6 @@ namespace AspnetRun.Core.Repositories
     public interface ICourtTypeRepository : IRepository<CourtType>
     {
         Task<List<CourtTypeDto>> GetCourtsTyps();
+        Task<CourtTypeDto> GetCourtTypById(int Id);
     }
 }
