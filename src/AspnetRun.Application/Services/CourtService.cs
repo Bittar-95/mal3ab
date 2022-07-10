@@ -32,9 +32,9 @@ namespace AspnetRun.Application.Services
         {
             return courtsRepository.GetAll(userId);
         }
-        public async Task<CourtDto> GetCourt(int courtId, int userId)
+        public async Task<CourtDto> GetCourt(int courtId, int? userId)
         {
-            var court = await courtsRepository.GetAsync(x => x.Id == courtId && x.UserId == userId);
+            var court = await courtsRepository.GetAsync(x => x.Id == courtId && (userId == null ? true : x.UserId == userId.Value));
             return _mapperConfig.Mapper().Map<CourtDto>(court.FirstOrDefault());
         }
 

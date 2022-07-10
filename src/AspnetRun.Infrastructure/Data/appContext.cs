@@ -1,4 +1,5 @@
 ﻿using AspnetRun.Core.Entities;
+using AspnetRun.Shared.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -8,15 +9,16 @@ namespace AspnetRun.Infrastructure.Data
 {
     public class appContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
-        private readonly DbContextOptions _options;
+        //private readonly DbContextOptions _options;
 
         public appContext(DbContextOptions options) : base(options)
         {
-            _options = options;
+            //_options = options;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Reservation>().Property(nameof(Reservation.Status)).HasDefaultValue(ReservationStatus.Pending);
             base.OnModelCreating(modelBuilder);
 
         }
@@ -33,8 +35,8 @@ namespace AspnetRun.Infrastructure.Data
 
         //protected override void OnModelCreating(ModelBuilder builder)
         //{
-        //    builder.Entity<Product>(ConfigureProduct);
-        //    builder.Entity<Category>(ConfigureCategory);
+        //    //builder.Entity<Reservation>().Property(nameof(Reservation.Status)).HasDefaultValue(ReservationStatus.Pending);
+        //    //builder.Entity<Category>(ConfigureCategory);
         //}
 
         //private void ConfigureProduct(EntityTypeBuilder<Product> builder)

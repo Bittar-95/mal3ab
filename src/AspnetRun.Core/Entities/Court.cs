@@ -19,6 +19,7 @@ namespace AspnetRun.Core.Entities
         public string Address { get; set; }
         public double Price { get; set; }
         public string ContactINFO { get; set; }
+        public double SessionTime { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
 

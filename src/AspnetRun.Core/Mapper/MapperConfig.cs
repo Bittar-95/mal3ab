@@ -18,6 +18,7 @@ namespace AspnetRun.Core.Mapper
                 cfg.CreateMap<Court, CourtDto>().ReverseMap();
                 cfg.CreateMap<CourtType, CourtTypeDto>().ReverseMap();
                 cfg.CreateMap<WorkingHour, WorkinghourDto>().ReverseMap();
+                cfg.CreateMap<Reservation, ReservationDto>().ReverseMap();
             });
             return configuration.CreateMapper();
         }

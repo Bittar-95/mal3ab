@@ -20,6 +20,8 @@ namespace AspnetRun.Shared.Dtos
         public string Address { get; set; }
         public double Price { get; set; }
         public int UserId { get; set; }
+        [Range(1, 24)]
+        public double SessionTime { get; set; }
         public WorkinghourDto? WorkinghourDto { get; set; }
         public string ContactINFO { get; set; }
         public CourtTypeDto? CourtType { get; set; }

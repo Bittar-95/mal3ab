@@ -18,6 +18,8 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 
 builder.Services.AddScoped<ICourtsRepository, CourtRepository>();
 builder.Services.AddScoped<ICourtService, CourtService>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<ICourtTypeRepository, CourtTypeRepository>();
 builder.Services.AddScoped<ICourtTypeService, CourtTypeService>();
 builder.Services.AddScoped<IWorkingHoursRepository, WorkingHoursRepository>();
