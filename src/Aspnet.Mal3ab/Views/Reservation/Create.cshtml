@@ -20,12 +20,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="From" class="control-label"></label>
-                <input name="From" class="form-control datetimepicker" />
+                <input name="From" class="form-control datetimepicker" autocomplete="off" />
                 <span asp-validation-for="From" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="To" class="control-label"></label>
-                <input name="To" class="form-control datetimepicker" />
+                <input name="To" class="form-control datetimepicker" autocomplete="off" />
                 <span asp-validation-for="To" class="text-danger"></span>
             </div>
             <div class="form-group" hidden>
@@ -60,11 +60,18 @@
 
     var workingInfo  = @Html.Raw(Json.Serialize(workingInfo))
      var bookedTimes = @Html.Raw(Json.Serialize(ViewBag.BookingTimes))
-     var minTime = workingInfo.fromTime != null ?workingInfo.fromTime: "01/01/2001 " + "00:00"
-     var maxTime = workingInfo.toTime != null ?workingInfo.toTime: "01/01/2001 " + "00:00"
 
-     var times = [];
-     times[0] = "00:00";
+     var minTime ="01/01/2001 " + "00:00"
+
+     var maxTime ="01/01/2001 " + "00:00"
+     if(workingInfo)
+     {
+         minTime =workingInfo ||  workingInfo.fromTime != null ?workingInfo.fromTime: "01/01/2001 " + "00:00"
+         maxTime = workingInfo || workingInfo.toTime != null ?workingInfo.toTime: "01/01/2001 " + "00:00"
+     }
+
+     //var times = ["00:51"];
+     //times[0] = "00:00";
       var sDate = new Date(minTime);
       var eDate = new Date(maxTime);
       var sessionTime = @Model.Court.SessionTime;
@@ -87,10 +94,12 @@
 
 
     function disableSomeDays(date) {
-        var workingInfo  = @Html.Raw(Json.Serialize(workingInfo))
         var day = date.getDay();
-        // If day == 1 then it is Wednesday
-        if (workingInfo.fromDay == null ||   day <= workingInfo.toDay && day >= workingInfo.fromDay) {
+        if(!workingInfo)
+        {
+        return [true] ;
+        }
+        else if (workingInfo.fromDay == null ||   day <= workingInfo.toDay && day >= workingInfo.fromDay) {
 
         return [true] ;
 

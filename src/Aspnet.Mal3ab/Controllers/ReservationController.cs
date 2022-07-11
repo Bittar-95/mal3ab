@@ -43,7 +43,7 @@ namespace Aspnet.Mal3ab.Controllers
             reservation.CourtId = court.Id;
             ViewBag.BookingTimes = (await _reservationService.Get(DateTime.Now)).Select(t => t.From.ToString("HH:mm").Trim());
             var wInfo = await _workingHoursService.GetAsync(Id);
-            if (wInfo.FromDay != null && wInfo.ToDay != null)
+            if (wInfo?.FromDay != null && wInfo?.ToDay != null)
             {
                 var minVal = Math.Min((int)wInfo.FromDay.Value, (int)wInfo.ToDay.Value);
                 wInfo.ToDay = (DayOfWeek)Enum.ToObject(typeof(DayOfWeek), Math.Max((int)wInfo.FromDay.Value, (int)wInfo.ToDay.Value));
@@ -63,7 +63,13 @@ namespace Aspnet.Mal3ab.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var wHours = await _workingHoursService.GetAsync(reservationDto.CourtId);
                     reservationDto.Id = null;
+                    if (reservationDto.From.TimeOfDay == reservationDto.To.TimeOfDay)
+                    {
+                        ModelState.AddModelError(nameof(reservationDto.To), "Start and End Time Are Same");
+                        return View(reservationDto);
+                    }
                     await _reservationService.Add(reservationDto);
                     return RedirectToAction(nameof(Index));
                 }
@@ -72,6 +78,21 @@ namespace Aspnet.Mal3ab.Controllers
             catch (Exception ms)
             {
                 return View(reservationDto);
+            }
+            finally
+            {
+                var court = await _courtService.GetCourt(reservationDto.CourtId, null);
+                reservationDto.Court = court;
+                ViewBag.BookingTimes = (await _reservationService.Get(DateTime.Now)).Select(t => t.From.ToString("HH:mm").Trim());
+                var wInfo = await _workingHoursService.GetAsync(reservationDto.CourtId);
+                if (wInfo?.FromDay != null && wInfo?.ToDay != null)
+                {
+                    var minVal = Math.Min((int)wInfo.FromDay.Value, (int)wInfo.ToDay.Value);
+                    wInfo.ToDay = (DayOfWeek)Enum.ToObject(typeof(DayOfWeek), Math.Max((int)wInfo.FromDay.Value, (int)wInfo.ToDay.Value));
+                    wInfo.FromDay = (DayOfWeek)Enum.ToObject(typeof(DayOfWeek), minVal);
+                }
+
+                ViewBag.WrokingInfo = wInfo;
             }
 
         }
