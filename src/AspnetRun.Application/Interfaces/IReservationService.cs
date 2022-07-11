@@ -10,5 +10,6 @@ namespace AspnetRun.Application.Interfaces
     public interface IReservationService
     {
         Task Add(ReservationDto reservation);
+        Task<List<ReservationDto>> Get(DateTime reservationDate);
     }
 }

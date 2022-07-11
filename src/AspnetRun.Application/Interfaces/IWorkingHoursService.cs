@@ -12,5 +12,6 @@ namespace AspnetRun.Application.Interfaces
         Task<WorkinghourDto> AddAsync(WorkinghourDto workingHourDto, int userId);
         Task<WorkinghourDto> GetAsync(int workingHourId);
         Task<WorkinghourDto> EditAsync(WorkinghourDto workingHourDto, int userId);
+        Task<List<WorkinghourDto>> GetBasedCourtIdAsync(int courtId);
     }
 }

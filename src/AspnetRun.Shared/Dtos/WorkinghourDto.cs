@@ -11,8 +11,8 @@ namespace AspnetRun.Shared.Dtos
     public class WorkinghourDto
     {
         public int? Id { get; set; }
-        public WeekDays? FromDay { get; set; }
-        public WeekDays? ToDay { get; set; }
+        public DayOfWeek? FromDay { get; set; }
+        public DayOfWeek? ToDay { get; set; }
         public DateTime? FromTime { get; set; }
         public DateTime? ToTime { get; set; }
         public int CourtId { get; set; }

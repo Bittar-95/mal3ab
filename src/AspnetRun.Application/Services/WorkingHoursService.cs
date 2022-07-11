@@ -51,5 +51,11 @@ namespace AspnetRun.Application.Services
             var workingHour = await _workingHourRepository.GetAsync(x => x.CourtId == courtId);
             return _configuration.Mapper().Map<WorkinghourDto>(workingHour.FirstOrDefault());
         }
+
+        public async Task<List<WorkinghourDto>> GetBasedCourtIdAsync(int courtId)
+        {
+            var workingHour = await _workingHourRepository.GetAsync(x => x.CourtId == courtId);
+            return _configuration.Mapper().Map<List<WorkinghourDto>>(workingHour);
+        }
     }
 }

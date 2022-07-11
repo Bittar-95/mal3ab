@@ -27,5 +27,13 @@ namespace AspnetRun.Application.Services
             await _reservationRepository.Add(reservation);
 
         }
+        public async Task <List<ReservationDto>> Get(DateTime reservationDate)
+        {
+            var reservation =await _reservationRepository.GetAsync(r=> r.From.Date == reservationDate.Date);
+
+            return _mapperConfig.Mapper().Map<List<ReservationDto>>(reservation);
+
+
+        }
     }
 }

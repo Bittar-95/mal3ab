@@ -1,5 +1,6 @@
 ﻿using AspnetRun.Application.Interfaces;
 using AspnetRun.Shared.Dtos;
+using AspnetRun.Shared.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,12 @@ namespace Aspnet.Mal3ab.Controllers
     {
         private readonly ICourtService _courtService;
         private readonly IReservationService _reservationService;
-        public ReservationController(ICourtService courtService, IReservationService reservationService)
+        private readonly IWorkingHoursService _workingHoursService;
+        public ReservationController(ICourtService courtService, IReservationService reservationService, IWorkingHoursService workingHoursService)
         {
             _courtService = courtService;
             _reservationService = reservationService;
+            _workingHoursService = workingHoursService;
         }
         // GET: ReservationController
         public ActionResult Index()
@@ -36,8 +39,17 @@ namespace Aspnet.Mal3ab.Controllers
                 return NotFound();
             }
             var reservation = new ReservationDto();
-            //reservation.Court = court;
+            reservation.Court = court;
             reservation.CourtId = court.Id;
+            ViewBag.BookingTimes = (await _reservationService.Get(DateTime.Now)).Select(t => t.From.ToString("HH:mm").Trim());
+            var wInfo = await _workingHoursService.GetAsync(Id);
+            if (wInfo.FromDay != null && wInfo.ToDay != null)
+            {
+                var minVal = Math.Min((int)wInfo.FromDay.Value, (int)wInfo.ToDay.Value);
+                wInfo.ToDay = (DayOfWeek)Enum.ToObject(typeof(DayOfWeek), Math.Max((int)wInfo.FromDay.Value, (int)wInfo.ToDay.Value));
+                wInfo.FromDay = (DayOfWeek)Enum.ToObject(typeof(DayOfWeek), minVal);
+            }
+            ViewBag.WrokingInfo = wInfo;
             return View(reservation);
         }
 

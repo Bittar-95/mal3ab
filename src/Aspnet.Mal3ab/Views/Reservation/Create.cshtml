@@ -1,7 +1,10 @@
 ﻿@model AspnetRun.Shared.Dtos.ReservationDto
+@using Newtonsoft.Json
 
 @{
     ViewData["Title"] = "Create";
+    //var t = ViewBag.BookingTimes;
+    var workingInfo = ViewBag.WrokingInfo;
 }
 
 <h1>Create</h1>
@@ -17,12 +20,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="From" class="control-label"></label>
-                <input asp-for="From" class="form-control" />
+                <input name="From" class="form-control datetimepicker" />
                 <span asp-validation-for="From" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="To" class="control-label"></label>
-                <input asp-for="To" class="form-control" />
+                <input name="To" class="form-control datetimepicker" />
                 <span asp-validation-for="To" class="text-danger"></span>
             </div>
             <div class="form-group" hidden>
@@ -53,4 +56,80 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+<script type="text/javascript">
+     var bookedTimes = @Html.Raw(Json.Serialize(ViewBag.BookingTimes))
+     var times = [];
+     times[0] = "00:00";
+      var d = new Date("01/01/2001 " + "00:00");
+         var sessionTime = @Model.Court.SessionTime;
+         var iterationNumber = 24 - (24 / ((sessionTime < 60)?60/sessionTime:sessionTime / 60));
+         debugger
+
+    while(true)
+    {
+       var isDublicated = false;
+
+                     for(let x= 0 ;x<=60;x+=sessionTime){
+                         d.setMinutes(d.getMinutes() +sessionTime );
+                         var newTime = ((d.getHours()=="0"?"00":d.getHours())+":"+(d.getMinutes()=="0"?"00":d.getMinutes())).trim();
+                                 if(times.includes(newTime))
+                                 {
+                                     isDublicated = true;
+                                     break;
+                                 }
+                                 if(!bookedTimes.includes(newTime))
+                                 {
+                                      times[times.length] = newTime;
+                                 }
+                     }
+
+      if(isDublicated){break;}
+
+    }
+
+
+</script>
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<!-- CSS CDN -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
+<!-- datetimepicker jQuery CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+</script>
+<script type="text/javascript">
+</script>
+<script type="text/javascript">
+
+
+    function disableSomeDays(date) {
+        var workingInfo  = @Html.Raw(Json.Serialize(workingInfo))
+        var day = date.getDay();
+        // If day == 1 then it is Wednesday
+        if (workingInfo.fromDay == null ||   day <= workingInfo.toDay && day >= workingInfo.fromDay) {
+
+        return [true] ;
+
+        } else {
+
+        return [false] ;
+        }
+      }
+    $('.datetimepicker').datetimepicker({
+        format: 'Y-m-d H:i',
+        beforeShowDay: disableSomeDays,
+        minDate: 0,
+        //disabledDates: ['2016-11-03 09:00'],
+        allowTimes: times,
+        //lang:'ar',
+          onChangeMonthYear: function () {
+                alert('y');
+          }
+
+    });
+    $.datetimepicker.setLocale('en');
+
+</script>
+
 }
