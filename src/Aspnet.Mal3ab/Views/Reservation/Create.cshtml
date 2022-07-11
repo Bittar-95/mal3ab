@@ -57,36 +57,19 @@
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
 <script type="text/javascript">
+
+    var workingInfo  = @Html.Raw(Json.Serialize(workingInfo))
      var bookedTimes = @Html.Raw(Json.Serialize(ViewBag.BookingTimes))
+     var minTime = workingInfo.fromTime != null ?workingInfo.fromTime: "01/01/2001 " + "00:00"
+     var maxTime = workingInfo.toTime != null ?workingInfo.toTime: "01/01/2001 " + "00:00"
+
      var times = [];
      times[0] = "00:00";
-      var d = new Date("01/01/2001 " + "00:00");
-         var sessionTime = @Model.Court.SessionTime;
-         var iterationNumber = 24 - (24 / ((sessionTime < 60)?60/sessionTime:sessionTime / 60));
-         debugger
-
-    while(true)
-    {
-       var isDublicated = false;
-
-                     for(let x= 0 ;x<=60;x+=sessionTime){
-                         d.setMinutes(d.getMinutes() +sessionTime );
-                         var newTime = ((d.getHours()=="0"?"00":d.getHours())+":"+(d.getMinutes()=="0"?"00":d.getMinutes())).trim();
-                                 if(times.includes(newTime))
-                                 {
-                                     isDublicated = true;
-                                     break;
-                                 }
-                                 if(!bookedTimes.includes(newTime))
-                                 {
-                                      times[times.length] = newTime;
-                                 }
-                     }
-
-      if(isDublicated){break;}
-
-    }
-
+      var sDate = new Date(minTime);
+      var eDate = new Date(maxTime);
+      var sessionTime = @Model.Court.SessionTime;
+      var startTime = (sDate.getHours()=='0'?"00":sDate.getHours())+":"+(sDate.getMinutes() == "0"?"00":sDate.getMinutes());
+      var endTime = (eDate.getHours() == '0'?"23":eDate.getHours())+":"+(+eDate.getMinutes() == "0"?"59":eDate.getMinutes());
 
 </script>
 <!-- jQuery CDN -->
@@ -121,7 +104,10 @@
         beforeShowDay: disableSomeDays,
         minDate: 0,
         //disabledDates: ['2016-11-03 09:00'],
-        allowTimes: times,
+        //allowTimes: times,
+        minTime:startTime,
+        maxTime:endTime,
+        step: sessionTime ,
         //lang:'ar',
           onChangeMonthYear: function () {
                 alert('y');

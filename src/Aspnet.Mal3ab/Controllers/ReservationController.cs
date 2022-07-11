@@ -49,6 +49,7 @@ namespace Aspnet.Mal3ab.Controllers
                 wInfo.ToDay = (DayOfWeek)Enum.ToObject(typeof(DayOfWeek), Math.Max((int)wInfo.FromDay.Value, (int)wInfo.ToDay.Value));
                 wInfo.FromDay = (DayOfWeek)Enum.ToObject(typeof(DayOfWeek), minVal);
             }
+
             ViewBag.WrokingInfo = wInfo;
             return View(reservation);
         }
