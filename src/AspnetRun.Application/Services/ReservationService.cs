@@ -15,21 +15,62 @@ namespace AspnetRun.Application.Services
     {
         private readonly MapperConfig _mapperConfig;
         private readonly IReservationRepository _reservationRepository;
-        public ReservationService(MapperConfig mapperConfig, IReservationRepository reservationRepository)
+        private readonly IWorkingHoursService _workingHoursService;
+        private readonly ICourtService _courtService;
+        public ReservationService(MapperConfig mapperConfig, IReservationRepository reservationRepository, IWorkingHoursService workingHoursService, ICourtService courtService)
         {
             _mapperConfig = mapperConfig;
             _reservationRepository = reservationRepository;
+            _workingHoursService = workingHoursService;
+            _courtService = courtService;
 
         }
-        public async Task Add(ReservationDto reservationDto)
+        public async Task<bool> Add(ReservationDto reservationDto)
         {
+            var wHours = await _workingHoursService.GetAsync(reservationDto.CourtId);
+            var court = await _courtService.GetCourt(reservationDto.CourtId, null);
+            reservationDto.To = reservationDto.From;
+            reservationDto.To = reservationDto.To.Value.AddMinutes(court.SessionTime);
+            var reservations = (await _reservationRepository.GetAsync(r => r.CourtId == reservationDto.CourtId)).Where(x=>x.From.Date.Equals(reservationDto.From.Date) && x.From.TimeOfDay == reservationDto.From.TimeOfDay);
+            if (reservations.Any())
+            {
+                return false;
+
+            }
+
+
+            if (wHours != null)
+            {
+                if (DateTime.UtcNow.Date > reservationDto.From.Date)
+                {
+                    return false;
+
+                }
+
+                if (wHours.FromTime.HasValue && reservationDto.From.TimeOfDay < wHours.FromTime.Value.TimeOfDay)
+                {
+                    return false;
+                }
+
+                if (wHours.ToTime.HasValue && reservationDto.To.Value.TimeOfDay > wHours.ToTime.Value.TimeOfDay)
+                {
+                    return false;
+                }
+
+                if (wHours.FromDay.HasValue && wHours.ToDay.HasValue && !(Enumerable.Range(Math.Min((int)wHours.FromDay.Value, (int)wHours.ToDay.Value), Math.Max((int)wHours.FromDay.Value, (int)wHours.ToDay.Value)).Contains((int)reservationDto.From.DayOfWeek)))
+                {
+                    return false;
+                }
+
+            }
             var reservation = _mapperConfig.Mapper().Map<Reservation>(reservationDto);
             await _reservationRepository.Add(reservation);
+            return true;
 
         }
-        public async Task <List<ReservationDto>> Get(DateTime reservationDate)
+        public async Task<List<ReservationDto>> Get(DateTime reservationDate)
         {
-            var reservation =await _reservationRepository.GetAsync(r=> r.From.Date == reservationDate.Date);
+            var reservation = await _reservationRepository.GetAsync(r => r.From.Date == reservationDate.Date);
 
             return _mapperConfig.Mapper().Map<List<ReservationDto>>(reservation);
 

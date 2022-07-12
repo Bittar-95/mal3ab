@@ -11,7 +11,7 @@ namespace AspnetRun.Shared.Dtos
     {
         public int? Id { get; set; }
         public DateTime From { get; set; }
-        public DateTime To { get; set; }
+        public DateTime? To { get; set; }
         public int CourtId { get; set; }
         public CourtDto? Court { get; set; }
         public string FullName { get; set; }

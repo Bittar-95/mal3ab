@@ -65,11 +65,12 @@ namespace Aspnet.Mal3ab.Controllers
                 {
                     var wHours = await _workingHoursService.GetAsync(reservationDto.CourtId);
                     reservationDto.Id = null;
-                    if (reservationDto.From.TimeOfDay == reservationDto.To.TimeOfDay)
-                    {
-                        ModelState.AddModelError(nameof(reservationDto.To), "Start and End Time Are Same");
-                        return View(reservationDto);
-                    }
+                    //if (reservationDto.From.TimeOfDay == reservationDto.To.TimeOfDay)
+                    //{
+                    //    ModelState.AddModelError(nameof(reservationDto.To), "Start and End Time Are Same");
+                    //    return View(reservationDto);
+                    //}
+
                     await _reservationService.Add(reservationDto);
                     return RedirectToAction(nameof(Index));
                 }
