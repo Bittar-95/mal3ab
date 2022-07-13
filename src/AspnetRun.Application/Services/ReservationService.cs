@@ -31,13 +31,11 @@ namespace AspnetRun.Application.Services
             var court = await _courtService.GetCourt(reservationDto.CourtId, null);
             reservationDto.To = reservationDto.From;
             reservationDto.To = reservationDto.To.Value.AddMinutes(court.SessionTime);
-            var reservations = (await _reservationRepository.GetAsync(r => r.CourtId == reservationDto.CourtId)).Where(x=>x.From.Date.Equals(reservationDto.From.Date) && x.From.TimeOfDay == reservationDto.From.TimeOfDay);
+            var reservations = (await _reservationRepository.GetAsync(r => r.CourtId == reservationDto.CourtId)).Where(x => x.From.Date.Equals(reservationDto.From.Date) && x.From.TimeOfDay == reservationDto.From.TimeOfDay && x.Status != Shared.Enums.ReservationStatus.Cancelled && x.Status != Shared.Enums.ReservationStatus.Pending);
             if (reservations.Any())
             {
                 return false;
-
             }
-
 
             if (wHours != null)
             {

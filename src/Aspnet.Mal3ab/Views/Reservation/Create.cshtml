@@ -7,50 +7,85 @@
     var workingInfo = ViewBag.WrokingInfo;
 }
 
-<h1>Create</h1>
 
-<h4>ReservationDto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" hidden>
-                <input asp-for="Id" class="form-control" />
+<section class="page-section bg-light" id="create-reservation">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-4">
+                <section>
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group" hidden>
+                            <input asp-for="Id" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="From" class="control-label"></label>
+                            <input name="From" class="form-control datetimepicker" autocomplete="off" />
+                            <span asp-validation-for="From" class="text-danger"></span>
+                        </div>
+                        @* <div class="form-group">
+                            <label asp-for="To" class="control-label"></label>
+                            <input name="To" class="form-control datetimepicker" autocomplete="off" />
+                            <span asp-validation-for="To" class="text-danger"></span>
+                            </div>*@
+                        <div class="form-group" hidden>
+                            <input asp-for="CourtId" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FullName" class="control-label"></label>
+                            <input asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber" class="control-label"></label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+
+                </section>
+
             </div>
-            <div class="form-group">
-                <label asp-for="From" class="control-label"></label>
-                <input name="From" class="form-control datetimepicker" autocomplete="off" />
-                <span asp-validation-for="From" class="text-danger"></span>
+            <div class="col-md-6 col-md-offset-2">
+                <section>
+                    <h3>Use another service to log in.</h3>
+                    <hr />
+                    @{
+                        if (true)
+                        {
+                            <div>
+                                <p>
+                                    There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                        article
+                                        about setting up this ASP.NET application to support logging in via external services
+                                    </a>.
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            //<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                            //    <div>
+                            //        <p>
+                            //            @foreach (var provider in Model.ExternalLogins)
+                            //            {
+                            //                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            //            }
+                            //        </p>
+                            //    </div>
+                            //</form>
+                        }
+                    }
+                </section>
             </div>
-           @* <div class="form-group">
-                <label asp-for="To" class="control-label"></label>
-                <input name="To" class="form-control datetimepicker" autocomplete="off" />
-                <span asp-validation-for="To" class="text-danger"></span>
-            </div>*@
-            <div class="form-group" hidden>
-                <input asp-for="CourtId" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{
