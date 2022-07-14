@@ -1,11 +1,13 @@
 ﻿using AspnetRun.Application.Interfaces;
 using AspnetRun.Shared.Dtos;
 using AspnetRun.Shared.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aspnet.Mal3ab.Controllers
 {
+    [Authorize]
     public class ReservationController : Controller
     {
         private readonly ICourtService _courtService;

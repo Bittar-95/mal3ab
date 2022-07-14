@@ -28,6 +28,10 @@ namespace AspnetRun.Shared.Dtos
         [Required]
         public int? CourtTypeId { get; set; }
 
+        public int? Take { get; set; } = 10;
+        public int? Skip { get; set; } = 0;
+        public bool? IsTopSex { get; set; }
+
 
     }
 }

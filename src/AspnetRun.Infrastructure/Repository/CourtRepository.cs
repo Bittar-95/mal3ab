@@ -51,5 +51,25 @@ namespace AspnetRun.Infrastructure.Repository
             }
             return courtDto;
         }
+
+        public List<CourtDto> Search(CourtDto courtDto)
+        {
+            //var results = from WorkingHours in _dbContext.WorkingHours
+            //              join Courts in _dbContext.Courts on WorkingHours.CourtId equals Courts.Id
+            //              join reservation in _dbContext.Reservations on Courts.Id equals reservation.CourtId into r
+            //              orderby r.Count()
+            //              select new { Courts, WorkingHours, r };
+
+            var results = _dbContext.Courts.Include(w => w.WorkingHours).Include(r => r.Reservations).OrderByDescending(r => r.Reservations.Count()).Include(t => t.CourtType).Skip(courtDto.Skip.Value).Take(courtDto.Take.Value);
+            var courts = _configuration.Mapper().Map<List<CourtDto>>(results);
+
+            //foreach (var result in results.ToList().Take(courtDto.Take.Value).Skip(courtDto.Skip.Value))
+            //{
+            //    var dto = _configuration.Mapper().Map<CourtDto>(result.Courts);
+            //    dto.WorkinghourDto = _configuration.Mapper().Map<WorkinghourDto>(result.WorkingHours);
+            //    courts.Add(dto);
+            //}
+            return courts;
+        }
     }
 }

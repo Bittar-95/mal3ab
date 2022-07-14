@@ -38,6 +38,11 @@ namespace AspnetRun.Application.Services
             return _mapperConfig.Mapper().Map<CourtDto>(court.FirstOrDefault());
         }
 
+        public List<CourtDto> SearchCourts(CourtDto courtDto)
+        {
+            return courtsRepository.Search(courtDto);
+        }
+
         public List<CourtDto> GetCourtsWithWorkingHours(int userId)
         {
             return courtsRepository.GetCourtsWithWorkingHours(userId);

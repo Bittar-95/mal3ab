@@ -14,5 +14,6 @@ namespace AspnetRun.Core.Repositories
         Task<CourtDto> Add(Court court);
         List<CourtDto> GetAll(int userId);
         List<CourtDto> GetCourtsWithWorkingHours(int userId);
+        List<CourtDto> Search(CourtDto courtDto);
     }
 }

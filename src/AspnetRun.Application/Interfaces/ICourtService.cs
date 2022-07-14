@@ -12,7 +12,8 @@ namespace AspnetRun.Application.Interfaces
 
         Task<CourtDto> Add(CourtDto courtDto);
         List<CourtDto> GetAllCourts(int userId);
-        Task<CourtDto> GetCourt(int courtId, int ?userId);
+        Task<CourtDto> GetCourt(int courtId, int? userId);
         List<CourtDto> GetCourtsWithWorkingHours(int userId);
+        List<CourtDto> SearchCourts(CourtDto courtDto);
     }
 }
