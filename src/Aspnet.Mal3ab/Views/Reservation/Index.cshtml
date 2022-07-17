@@ -1,0 +1,35 @@
+﻿@model IPagedList<AspnetRun.Shared.Dtos.ReservationDto>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class=container>
+        <section>
+
+    @foreach (var item in Model)
+    {
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@item.FullName</h5>
+                        <small>@item.From</small>
+                    </div>
+                    <p class="mb-1">@item.From.DayOfWeek</p>
+                    @*<small>@item.From - @item.To </small>*@
+                    <small>@item.PhoneNumber </small>
+                    <span>@item.Status </span>
+                </a>
+
+
+            </div>
+    }
+    </section
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new {Id=Model.First().CourtId,pageNunber=page }))
+
+</div>
+
+
+

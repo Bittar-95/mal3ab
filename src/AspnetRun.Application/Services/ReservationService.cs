@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace AspnetRun.Application.Services
 {
@@ -74,5 +75,17 @@ namespace AspnetRun.Application.Services
 
 
         }
+        public async Task<IPagedList<ReservationDto>> GetReservationsBasedOnCourtId(int courtId, int userId, int pageSize, int pageNumber)
+        {
+            var courts = await _courtService.GetCourt(courtId, userId);
+            if (courts == null)
+            {
+                return null;
+            }
+            var reservations = _reservationRepository.GetAsync(r => r.CourtId == courtId).Result.ToPagedList(pageNumber, pageSize);
+            var resultDto = _mapperConfig.Mapper().Map<List<ReservationDto>>(reservations.ToList());
+            return new StaticPagedList<ReservationDto>(resultDto, reservations);
+        }
+
     }
 }

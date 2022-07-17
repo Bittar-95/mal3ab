@@ -1,6 +1,7 @@
 ﻿using AspnetRun.Application.Interfaces;
 using AspnetRun.Shared.Dtos;
 using AspnetRun.Shared.Enums;
+using AspnetRun.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,14 @@ namespace Aspnet.Mal3ab.Controllers
             _workingHoursService = workingHoursService;
         }
         // GET: ReservationController
-        public ActionResult Index()
+        public async Task<ActionResult> Index(int Id, int pageNunber)
         {
-            return View();
+            //Id Represent The CourtId
+
+            pageNunber = pageNunber == 0 ? 1 : pageNunber;
+
+            var res = await _reservationService.GetReservationsBasedOnCourtId(Id, User.GetUserId().Value, 5, pageNunber);
+            return View(res);
         }
 
         // GET: ReservationController/Details/5
