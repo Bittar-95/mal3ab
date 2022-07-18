@@ -83,7 +83,7 @@ namespace AspnetRun.Application.Services
             {
                 return null;
             }
-            var reservations = _reservationRepository.GetAsync(r => r.CourtId == courtId).Result.ToPagedList(pageNumber, pageSize);
+            var reservations = _reservationRepository.GetAsync(r => r.CourtId == courtId).Result.OrderBy(r => r.Status).ThenBy(r => r.From).ToPagedList(pageNumber, pageSize);
             var resultDto = _mapperConfig.Mapper().Map<List<ReservationDto>>(reservations.ToList());
             return new StaticPagedList<ReservationDto>(resultDto, reservations);
         }
