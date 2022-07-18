@@ -32,12 +32,14 @@
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item"><a class="nav-link nav-link-login" href="/Identity/Account/Login">Log In</a></li>
                     }
                     else
                     {
+                        <li class="nav-item"><a class="nav-link nav-link-login" asp-action="Index" asp-controller="Courts">Courts</a></li>
                         <li class="nav-item"><a class="nav-link nav-link-login" href="/Identity/Account/Logout">Log Out</a></li>
                     }
                 </ul>

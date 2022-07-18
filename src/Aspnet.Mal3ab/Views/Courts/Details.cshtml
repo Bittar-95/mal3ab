@@ -7,77 +7,80 @@
 
 <h1>Details</h1>
 
-<div>
-    <h4>CourtDto</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name_AR)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name_AR)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name_EN)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name_EN)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Lat)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Lat)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Lng)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Lng)
-        </dd>
-        @if (!string.IsNullOrEmpty(Model.Lat) && !string.IsNullOrEmpty(Model.Lng))
-        {
-            <a href="@mapLink">See On Map</a>
-        }
+<div class="container">
+    <section>
+        <h4>CourtDto</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name_AR)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name_AR)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name_EN)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name_EN)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Lat)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Lat)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Lng)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Lng)
+            </dd>
+            @if (!string.IsNullOrEmpty(Model.Lat) && !string.IsNullOrEmpty(Model.Lng))
+            {
+                <a href="@mapLink" target="_blank">See On Map</a>
+            }
 
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.city)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.city)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.area)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.area)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ContactINFO)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ContactINFO)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CourtType.Type_EN)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CourtType.Type_EN)
-        </dd>
-    </dl>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.city)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.city)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.area)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.area)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ContactINFO)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ContactINFO)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CourtType.Type_EN)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CourtType.Type_EN)
+            </dd>
+        </dl>
+    </section>
+
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
