@@ -21,13 +21,14 @@ namespace Aspnet.Mal3ab.Controllers
             _workingHoursService = workingHoursService;
         }
         // GET: ReservationController
-        public async Task<ActionResult> Index(int Id, int pageNunber)
+        public async Task<ActionResult> Index(int Id, int pageNumber)
         {
             //Id Represent The CourtId
 
-            pageNunber = pageNunber == 0 ? 1 : pageNunber;
+            ViewBag.CourtId = Id;
+            pageNumber = pageNumber == 0 ? 1 : pageNumber;
 
-            var res = await _reservationService.GetReservationsBasedOnCourtId(Id, User.GetUserId().Value, 5, pageNunber);
+            var res = await _reservationService.GetReservationsBasedOnCourtId(Id, User.GetUserId().Value, 5, pageNumber);
             return View(res);
         }
 
@@ -115,16 +116,12 @@ namespace Aspnet.Mal3ab.Controllers
         // POST: ReservationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, int courtId, int pageNumber, ReservationStatus status)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            // id reservationId
+            _reservationService.AcceptOrReject(id, courtId, User.GetUserId().Value, status);
+
+            return RedirectToAction(nameof(Index), new { id = courtId, pageNumber });
         }
 
         // GET: ReservationController/Delete/5

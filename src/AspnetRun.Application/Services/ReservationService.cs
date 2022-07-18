@@ -3,6 +3,7 @@ using AspnetRun.Core.Entities;
 using AspnetRun.Core.Mapper;
 using AspnetRun.Core.Repositories;
 using AspnetRun.Shared.Dtos;
+using AspnetRun.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,5 +88,9 @@ namespace AspnetRun.Application.Services
             return new StaticPagedList<ReservationDto>(resultDto, reservations);
         }
 
+        public void AcceptOrReject(int reservationId, int courtId, int userId, ReservationStatus reservationStatus)
+        {
+            _reservationRepository.AcceptOrReject(reservationId, courtId, userId, reservationStatus);
+        }
     }
 }

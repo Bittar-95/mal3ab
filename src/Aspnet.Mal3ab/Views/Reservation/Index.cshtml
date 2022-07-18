@@ -1,16 +1,24 @@
 ﻿@model IPagedList<AspnetRun.Shared.Dtos.ReservationDto>
 @using X.PagedList;
 @using X.PagedList.Mvc.Core
+@using AspnetRun.Shared.Enums;
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <div class=container>
-        <section>
+    <section>
 
-    @foreach (var item in Model)
-    {
+        @if (Model == null)
+        {
+            <h1>No Results</h1>
+            return;
+
+        }
+
+        @foreach (var item in Model)
+        {
             <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
@@ -21,13 +29,27 @@
                     @*<small>@item.From - @item.To </small>*@
                     <small>@item.PhoneNumber </small>
                     <span>@item.Status </span>
+                    @if (item.Status == ReservationStatus.Pending)
+                    {
+                        <div>
+                            <form asp-action="edit" asp-route-Id=@item.Id asp-route-courtId=@ViewBag.CourtId asp-route-pageNumber="@Model.PageNumber" asp-route-status="@ReservationStatus.Accepted">
+                                <button class="btn btn-success" type="submit">Accept</button>
+                            </form>
+                            <form asp-action="edit" asp-route-Id=@item.Id asp-route-courtId=@ViewBag.CourtId asp-route-pageNumber="@Model.PageNumber" asp-route-status="@ReservationStatus.Cancelled">
+                                <button class="btn btn-danger" type="submit">Ignor</button>
+                            </form>
+                        </div>
+                    }
                 </a>
 
 
             </div>
-    }
-    </section
-    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new {Id=Model.First().CourtId,pageNunber=page }))
+        }
+        @if (Model.PageCount > 0)
+        {
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new {Id=Model.First().CourtId,pageNumber=page }))
+        }
+    </section>
 
 </div>
 
